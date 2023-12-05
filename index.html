@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<style>
+    body {
+        background: rgb(238, 174, 202);
+        background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(103, 237, 255, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    }
+
+    @media (max-width: 768px) {
+        #result {
+            margin-top: 90%;
+            height: 100%;
+            width: 100%;
+        }
+
+        h3 {
+            font-size: large;
+        }
+
+        h4 {
+            font-size: large;
+        }
+
+        h2 {
+            font-size: large;
+        }
+
+        #p1 {
+            font-size: 50px;
+        }
+
+        #g1 {
+            height: 100%;
+        }
+
+        #div1 {
+            height: 100%;
+        }
+
+        #b1 {
+            margin-top: 10;
+        }
+
+    }
+
+</style>
+
+<body>
+    <div style="height:400px;position: absolute;" class="container-fluid w-100 ">
+        <div class="p-5" style="position: relative;margin-top: 5%;">
+            <h1 class="text-center text-white">Weather app</h1>
+            <br>
+            <input id="csearch" type="text" class="w-50 form-control container my-5" placeholder="Enter city to search">
+            <div class="text-center"><button class="btn btn-success" type="button" onclick="search()">search</button>
+                <button class="btn btn-danger" id="b1" type="button" onclick="currentLocation()">Current Location</button>
+
+            </div>
+        </div>
+    </div>
+    <br>
+    <div id="result"></div>
+    <br><br>
+
+</body>
+<script>
+    function search() {
+        cname = csearch.value
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cname}&appid=5b4bee0ba241d092159faf007e166080`).then(response => response.json())
+            .then(result => displayData(result))
+
+    }
+    function displayData(dataObject) {
+        nname = dataObject.name
+        con = dataObject.weather[0].main
+        ntemp = Math.floor(dataObject.main.temp - 273)
+        feelLike = Math.floor(dataObject.main.feels_like - 273)
+        pressure = dataObject.main.pressure
+        humidity = dataObject.main.humidity
+        windSpeed = dataObject.wind.speed
+        maxTemp = Math.floor(dataObject.main.temp_max - 273)
+        minTemp = Math.floor(dataObject.main.temp_min - 273)
+        //sunny climate
+    
+        if (con == "Clear") {
+            result.innerHTML = `
+        <div style="background-image: url(./imgWeather/blog-4.jpg);background-size: cover; height: 620px;margin-top: 30%;" class="w-100 container" id="div1" >
+            <div class="row" style="height: 100%;">
+                <div class="col-lg-7  col-sm-12 my-5">
+                    <h1>${nname}</h1>
+                    <h3>Country:India</h3>
+                    <br>
+                    <h4>${con} Climate</h4>
+                    <p id="p1" style="font-size: 100px;"><i class="fa-solid  fa-temperature-full"></i>${ntemp}°C </p>
+
+                </div>
+                <div class="col-lg-5 col-sm-12 " style="background-color: rgba(239, 239, 239, 0.616); id="g1">
+                    <p>Feels Liks</p>
+                    <h4>${feelLike}°C</h4>
+                    <hr>
+                    <p>Pressure</p>
+                    <h4>${pressure}</h4>
+                    <hr>
+                    <p>Humidity</p>
+                    <h4>${humidity}%</h4>
+                    <hr>
+                    <p>Wind Speed</p>
+                    <h4>${windSpeed}</h4>
+                    <hr>
+                    <p>Maximum Temperature</p>
+                    <h4>${maxTemp}°C</h4>
+                    <hr>
+                    <p>Minimum Temperature</p>
+                    <h4>${minTemp}°C</h4>
+
+                </div>
+            </div>
+        </div>
+        `
+        }
+        // Rain
+        else if (con == "Rain") {
+
+            result.innerHTML = `
+        <div style="            background-image: url(./imgWeather/FAQ-on-what-does-climate--006.avif);background-size: cover; height: 620px;margin-top: 30%;" class="w-100 container" id="div1" >
+            <div class="row" style="height: 100%;">
+                <div class="col-lg-7  col-sm-12 my-5">
+                    <h1>${nname}</h1>
+                    <h3>Country:India</h3>
+                    <br>
+                    <h4>${con} Climate</h4>
+                    <p id="p1" style="font-size: 100px;"><i class="fa-solid  fa-temperature-full"></i>${ntemp}°C </p>
+
+                </div>
+                <div class="col-lg-5 col-sm-12 " style="background-color: rgba(239, 239, 239, 0.616); id="g1">
+                    <p>Feels Liks</p>
+                    <h3>${feelLike}°C</h3>
+                    <hr>
+                    <p>Pressure</p>
+                    <h3>${pressure}</h3>
+                    <hr>
+                    <p>Humidity</p>
+                    <h3>${humidity}%</h3>
+                    <hr>
+                    <p>Wind Speed</p>
+                    <h3>${windSpeed}</h3>
+                    <hr>
+                    <p>Maximum Temperature</p>
+                    <h3>${maxTemp}°C</h3>
+                    <hr>
+                    <p>Minimum Temperature</p>
+                    <h3>${minTemp}°C</h3>
+
+                </div>
+            </div>
+        </div>
+        `
+        }
+        // clouds
+        else if (con == "Clouds") {
+            result.innerHTML = `
+        <div style="background-image: url(./imgWeather/6B2730C8-B0D0-485F-A0618F3954CF58D8_source.webp);background-size: cover; height: 620px;margin-top: 30%;" class="w-100 container" id="div1" >
+            <div class="row" style="height: 100%;">
+                <div class="col-lg-7  col-sm-12 my-5 text-white">
+                    <h1>${nname}</h1>
+                    <h3>Country:India</h3>
+                    <br>
+                    <h4>${con} Climate</h4>
+                    <p id="p1" style="font-size: 100px;"><i class="fa-solid  fa-temperature-full"></i>${ntemp}°C </p>
+
+                </div>
+                <div class="col-lg-5 col-sm-12 " style="background-color: rgba(239, 239, 239, 0.616); id="g1">
+                    <p>Feels Liks</p>
+                    <h3>${feelLike}°C</h3>
+                    <hr>
+                    <p>Pressure</p>
+                    <h3>${pressure}</h3>
+                    <hr>
+                    <p>Humidity</p>
+                    <h3>${humidity}%</h3>
+                    <hr>
+                    <p>Wind Speed</p>
+                    <h3>${windSpeed}</h3>
+                    <hr>
+                    <p>Maximum Temperature</p>
+                    <h3>${maxTemp}°C</h3>
+                    <hr>
+                    <p>Minimum Temperature</p>
+                    <h3>${minTemp}°C</h3>
+
+                </div>
+            </div>
+        </div>
+        `
+        }
+        //mist
+        else if (con == "Mist") {
+            result.innerHTML = `
+        <div style="background-image: url(./imgWeather/photo-1485236715568-ddc5ee6ca227.avif);background-size: cover; height: 620px;margin-top: 30%;" class="w-100 container" id="div1" >
+            <div class="row" style="height: 100%;">
+                <div class="col-lg-7  col-sm-12 my-5">
+                    <h1>${nname}</h1>
+                    <h3>Country:India</h3>
+                    <br>
+                    <h4>${con} Climate</h4>
+                    <p id="p1" style="font-size: 100px;"><i class="fa-solid  fa-temperature-full"></i>${ntemp}°C </p>
+
+                </div>
+                <div class="col-lg-5 col-sm-12 " style="background-color: rgba(239, 239, 239, 0.616); id="g1">
+                    <p>Feels Liks</p>
+                    <h3>${feelLike}°C</h3>
+                    <hr>
+                    <p>Pressure</p>
+                    <h3>${pressure}</h3>
+                    <hr>
+                    <p>Humidity</p>
+                    <h3>${humidity}%</h3>
+                    <hr>
+                    <p>Wind Speed</p>
+                    <h3>${windSpeed}</h3>
+                    <hr>
+                    <p>Maximum Temperature</p>
+                    <h3>${maxTemp}°C</h3>
+                    <hr>
+                    <p>Minimum Temperature</p>
+                    <h3>${minTemp}°C</h3>
+
+                </div>
+            </div>
+        </div>
+        `
+        }
+    }
+
+    function currentLocation() {
+        navigator.geolocation.getCurrentPosition((location) => {
+            console.log(location);
+
+            lat = location.coords.latitude
+            lon = location.coords.longitude
+
+
+            cname = fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`).then(response => response.json()).then(cname => cname.locality)
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cname}&appid=5b4bee0ba241d092159faf007e166080`).then(response1 => response1.json()).then(result => displayData(result))
+        });
+
+    }
+
+</script>
+
+</html>
